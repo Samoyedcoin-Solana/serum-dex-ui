@@ -3,6 +3,8 @@ import { Button, Col, Popover, Row, Select, Typography } from 'antd';
 import styled from 'styled-components';
 import Orderbook from '../components/Orderbook';
 import UserInfoTable from '../components/UserInfoTable';
+import { TVChartContainer } from '../../src/components/TradingView';
+import FloatingElement from '../components/layout/FloatingElement';
 import StandaloneBalancesDisplay from '../components/StandaloneBalancesDisplay';
 import {
   getMarketInfos,
@@ -78,7 +80,7 @@ function TradePageInner() {
   });
 
   useEffect(() => {
-    document.title = marketName ? `${marketName} — Serum` : 'Serum';
+    document.title = marketName ? `${marketName} — SamoDEX` : 'SamoDEX';
   }, [marketName]);
 
   const changeOrderRef = useRef<
@@ -288,6 +290,8 @@ function MarketSelector({
               : 0,
           )
           .sort((a, b) =>
+            extractBase(a.name) === 'SAMO' ? -1 :
+            extractBase(b.name) === 'SAMO' ? 1 :
             extractBase(a.name) < extractBase(b.name)
               ? -1
               : extractBase(a.name) > extractBase(b.name)
@@ -335,7 +339,10 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
         flexWrap: 'nowrap',
       }}
     >
-      <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
+      <Col flex="auto" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+        <FloatingElement style={{minHeight: '500px', padding: '1px', overflow: 'hidden'}}>
+          <TVChartContainer />
+        </FloatingElement>
         <UserInfoTable />
       </Col>
       <Col flex={'360px'} style={{ height: '100%' }}>
@@ -356,6 +363,19 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
 const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
     <>
+      <Row>
+        <Col flex="auto" style={{ height: '325px', display: 'flex', flexDirection: 'column' }}>
+          <FloatingElement style={{ flex: 1, Height: '100%', padding: 0, overflow: 'hidden' }}>
+            <TVChartContainer />
+          </FloatingElement>
+        </Col>
+        <Col
+          flex="470px"
+          style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+        >
+          <TradeForm setChangeOrderRef={onChangeOrderRef} />
+        </Col>
+      </Row>
       <Row
         style={{
           height: '900px',
@@ -376,7 +396,6 @@ const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
           flex="400px"
           style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
         >
-          <TradeForm setChangeOrderRef={onChangeOrderRef} />
           <StandaloneBalancesDisplay />
         </Col>
       </Row>
@@ -393,6 +412,13 @@ const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
     <>
       <Row>
+        <Col flex="auto" style={{ height: '445px', display: 'flex', flexDirection: 'column' }}>
+          <FloatingElement style={{ flex: 1, Height: '100%', padding: 0, overflow: 'hidden' }}>
+            <TVChartContainer />
+          </FloatingElement>
+        </Col>
+      </Row>
+      <Row>  
         <Col xs={24} sm={12} style={{ height: '100%', display: 'flex' }}>
           <TradeForm style={{ flex: 1 }} setChangeOrderRef={onChangeOrderRef} />
         </Col>

@@ -7,6 +7,11 @@ import { ConnectionContextValues, EndpointInfo } from './types';
 
 export const ENDPOINTS: EndpointInfo[] = [
   {
+    name: 'samo-mainnet',
+    endpoint: 'https://gate2.main.genesysgo.net:8899/',
+    custom: false,
+  },
+  {
     name: 'mainnet-beta',
     endpoint: 'https://solana-api.projectserum.com',
     custom: false,

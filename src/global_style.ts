@@ -1,8 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
+import gradient from './assets/gradient1.png';
 
 export const GlobalStyle = createGlobalStyle`
 html,body{
-  background: #11161D;
+
 }
 input[type=number]::-webkit-inner-spin-button {
   opacity: 0;
@@ -55,7 +56,11 @@ input[type=number]:focus::-webkit-inner-spin-button {
   border-top: 1px solid #434a59 !important;
 }
 .ant-layout {
-    background: #11161D
+    background-image: url(${gradient});
+    background-size: cover;
+  }
+  .ant-layout-header {
+    background: none !important;
   }
   .ant-table {
     background: #212734;
@@ -70,6 +75,9 @@ input[type=number]:focus::-webkit-inner-spin-button {
 }
 .ant-modal-content {
   background-color: #212734;
+}
+.ant-select-dropdown {
+  background-color: #2e23ad;
 }
 
 @-webkit-keyframes highlight {

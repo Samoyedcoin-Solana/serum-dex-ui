@@ -27,12 +27,42 @@ import BonfidaApi from './bonfidaConnector';
 // Used in debugging, should be false in production
 const _IGNORE_DEPRECATED = false;
 
-export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
+const ALL_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
   ? MARKETS.map((m) => ({ ...m, deprecated: false }))
   : MARKETS;
 
+const samo: MarketInfo = {
+  address: new PublicKey("FR3SPJmgfRSKKQ2ysUZBu7vJLpzTixXnjzb84bY3Diif"),
+  name: "SAMO/USDC",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+  deprecated: false,
+  quoteLabel: "SAMO/USDC",
+  baseLabel: "SAMO"
+}
+const ino: MarketInfo = {
+  address: new PublicKey("HyERWE8TEQmDX157oLEpwaTc59ECzmvjUgZhZ2RNtNdn"),
+  name: "INO/USDC",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+  deprecated: false,
+  quoteLabel: "INO/USDC",
+  baseLabel: "INO"
+}
+const shbl: MarketInfo = {
+  address: new PublicKey("9G2bAA5Uv8JyPZteuP73GJLUGg5CMbhMLCRSBUBLoXyt"),
+  name: "SHBL/USDC",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin"),
+  deprecated: false,
+  quoteLabel: "SHBL/USDC",
+  baseLabel: "SHBL"
+}
+
+export const USE_MARKETS: MarketInfo[] = [samo, ino, shbl, ...ALL_MARKETS];
+
 export function useMarketsList() {
-  return USE_MARKETS.filter(({ name, deprecated }) => !deprecated && !process.env.REACT_APP_EXCLUDE_MARKETS?.includes(name));
+  return USE_MARKETS.filter(({ name, deprecated }) => {
+    let excludedMarkets = process.env.REACT_APP_EXCLUDE_MARKETS?.split(',');
+    return !deprecated && !excludedMarkets?.includes(name);
+  });
 }
 
 export function useAllMarkets() {
@@ -159,7 +189,7 @@ const _SLOW_REFRESH_INTERVAL = 5 * 1000;
 const _FAST_REFRESH_INTERVAL = 1000;
 
 export const DEFAULT_MARKET = USE_MARKETS.find(
-  ({ name, deprecated }) => name === 'SRM/USDT' && !deprecated,
+  ({ name, deprecated }) => name === 'SAMO/USDC' && !deprecated,
 );
 
 export function getMarketDetails(

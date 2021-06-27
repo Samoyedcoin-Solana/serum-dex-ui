@@ -3,8 +3,10 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   margin: 5px;
+  border-radius: 25px;
   padding: 20px;
-  background-color: #1a2029;
+  background-color: #131a36;
+  border: 2px solid #fff;
 `;
 
 export default function FloatingElement({
