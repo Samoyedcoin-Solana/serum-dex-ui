@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+charting_library
+datafeeds
 /.pnp
 .pnp.js
 
