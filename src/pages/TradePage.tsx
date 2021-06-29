@@ -12,6 +12,7 @@ import {
   MarketProvider,
   useMarket,
   useMarketsList,
+  useMarkPrice,
   useUnmigratedDeprecatedMarkets,
 } from '../utils/markets';
 import TradeForm from '../components/TradeForm';
@@ -71,6 +72,7 @@ function TradePageInner() {
     setMarketAddress,
   } = useMarket();
   const markets = useMarketsList();
+  const markPrice = useMarkPrice();
   const [handleDeprecated, setHandleDeprecated] = useState(false);
   const [addMarketVisible, setAddMarketVisible] = useState(false);
   const deprecatedMarkets = useUnmigratedDeprecatedMarkets();
@@ -80,8 +82,8 @@ function TradePageInner() {
   });
 
   useEffect(() => {
-    document.title = marketName ? `${marketName} — SamoDEX` : 'SamoDEX';
-  }, [marketName]);
+    document.title = marketName && markPrice ? `${markPrice} — ${marketName} — SamoDEX` : 'SamoDEX';
+  }, [marketName, markPrice]);
 
   const changeOrderRef = useRef<
     ({ size, price }: { size?: number; price?: number }) => void
