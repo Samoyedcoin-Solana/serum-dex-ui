@@ -91,15 +91,21 @@ export default function Orderbook({
     };
   }, [orderbook]);
 
-  const onRef = useCallback((node) => {
-    if (node) {
-      node.scrollTo({
-        top: (node.scrollHeight - node.clientHeight) / 2,
-        left: 0,
-        behavior: 'smooth',
-      });
-    }
-  });
+  const orderBookRef = useRef();
+  useEffect(() => {
+    setTimeout(() => {
+      if (orderBookRef.current) {
+        orderBookRef.current.scrollTo({
+          top:
+            (orderBookRef.current.scrollHeight -
+              orderBookRef.current.clientHeight) /
+            2,
+          left: 0,
+          behavior: 'smooth',
+        });
+      }
+    }, 4500);
+  }, [baseCurrency]);
 
   function getCumulativeOrderbookSide(orders, totalSize, backwards = false) {
     let cumulative = orders
@@ -137,7 +143,7 @@ export default function Orderbook({
       </SizeTitle>
       {!!orderbookData && (
         <div
-          ref={onRef}
+          ref={orderBookRef}
           style={{
             marginRight: '-20px',
             paddingRight: '5px',
