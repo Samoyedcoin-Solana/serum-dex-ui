@@ -1,5 +1,5 @@
 import { Col, Row } from 'antd';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { useMarket, useOrderbook, useMarkPrice } from '../utils/markets';
 import { isEqual, getDecimalCount } from '../utils/utils';
@@ -44,7 +44,12 @@ const Price = styled.div`
   color: white;
 `;
 
-export default function Orderbook({ smallScreen, depth = 7, onPrice, onSize }) {
+export default function Orderbook({
+  smallScreen,
+  depth = 14,
+  onPrice,
+  onSize,
+}) {
   const markPrice = useMarkPrice();
   const [orderbook] = useOrderbook();
   const { baseCurrency, quoteCurrency } = useMarket();
@@ -86,6 +91,12 @@ export default function Orderbook({ smallScreen, depth = 7, onPrice, onSize }) {
     };
   }, [orderbook]);
 
+  const onRef = useCallback((node) => {
+    if (node) {
+      node.scrollTop = (node.scrollHeight - node.clientHeight) / 2;
+    }
+  });
+
   function getCumulativeOrderbookSide(orders, totalSize, backwards = false) {
     let cumulative = orders
       .slice(0, depth)
@@ -120,29 +131,43 @@ export default function Orderbook({ smallScreen, depth = 7, onPrice, onSize }) {
           Price ({quoteCurrency})
         </Col>
       </SizeTitle>
-      {orderbookData?.asks.map(({ price, size, sizePercent }) => (
-        <OrderbookRow
-          key={price + ''}
-          price={price}
-          size={size}
-          side={'sell'}
-          sizePercent={sizePercent}
-          onPriceClick={() => onPrice(price)}
-          onSizeClick={() => onSize(size)}
-        />
-      ))}
-      <MarkPriceComponent markPrice={markPrice} />
-      {orderbookData?.bids.map(({ price, size, sizePercent }) => (
-        <OrderbookRow
-          key={price + ''}
-          price={price}
-          size={size}
-          side={'buy'}
-          sizePercent={sizePercent}
-          onPriceClick={() => onPrice(price)}
-          onSizeClick={() => onSize(size)}
-        />
-      ))}
+      {!!orderbookData && (
+        <div
+          ref={onRef}
+          style={{
+            marginRight: '-20px',
+            paddingRight: '5px',
+            overflowY: 'scroll',
+            maxHeight: smallScreen
+              ? 'calc(100% - 75px)'
+              : 'calc(100vh - 550px)',
+          }}
+        >
+          {orderbookData?.asks.map(({ price, size, sizePercent }) => (
+            <OrderbookRow
+              key={price + ''}
+              price={price}
+              size={size}
+              side={'sell'}
+              sizePercent={sizePercent}
+              onPriceClick={() => onPrice(price)}
+              onSizeClick={() => onSize(size)}
+            />
+          ))}
+          <MarkPriceComponent markPrice={markPrice} />
+          {orderbookData?.bids.map(({ price, size, sizePercent }) => (
+            <OrderbookRow
+              key={price + ''}
+              price={price}
+              size={size}
+              side={'buy'}
+              sizePercent={sizePercent}
+              onPriceClick={() => onPrice(price)}
+              onSizeClick={() => onSize(size)}
+            />
+          ))}
+        </div>
+      )}
     </FloatingElement>
   );
 }
