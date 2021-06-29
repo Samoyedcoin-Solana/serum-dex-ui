@@ -79,6 +79,9 @@ input[type=number]:focus::-webkit-inner-spin-button {
 .ant-select-dropdown {
   background-color: #2e23ad;
 }
+.ant-select-item-option-selected {
+  background-color: #752e75 !important;
+}
 
 @-webkit-keyframes highlight {
   from { background-color: #2abdd2;}
