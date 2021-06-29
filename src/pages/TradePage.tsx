@@ -288,17 +288,17 @@ function MarketSelector({
               ? -1
               : extractQuote(a.name) !== 'USDT' &&
                 extractQuote(b.name) === 'USDT'
-              ? 1
-              : 0,
+                ? 1
+                : 0,
           )
           .sort((a, b) =>
             extractBase(a.name) === 'SAMO' ? -1 :
-            extractBase(b.name) === 'SAMO' ? 1 :
-            extractBase(a.name) < extractBase(b.name)
-              ? -1
-              : extractBase(a.name) > extractBase(b.name)
-              ? 1
-              : 0,
+              extractBase(b.name) === 'SAMO' ? 1 :
+                extractBase(a.name) < extractBase(b.name)
+                  ? -1
+                  : extractBase(a.name) > extractBase(b.name)
+                    ? 1
+                    : 0,
           )
           .map(({ address, name, deprecated }, i) => (
             <Option
@@ -342,7 +342,7 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
       }}
     >
       <Col flex="auto" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-        <FloatingElement style={{minHeight: '500px', padding: '1px', overflow: 'hidden'}}>
+        <FloatingElement style={{ minHeight: '500px', padding: '1px', overflow: 'hidden' }}>
           <TVChartContainer />
         </FloatingElement>
         <UserInfoTable />
@@ -420,7 +420,7 @@ const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
           </FloatingElement>
         </Col>
       </Row>
-      <Row>  
+      <Row>
         <Col xs={24} sm={12} style={{ height: '100%', display: 'flex' }}>
           <TradeForm style={{ flex: 1 }} setChangeOrderRef={onChangeOrderRef} />
         </Col>
@@ -436,7 +436,9 @@ const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
         <Col xs={24} sm={12} style={{ height: '100%', display: 'flex' }}>
           <Orderbook smallScreen={true} onPrice={onPrice} onSize={onSize} />
         </Col>
-        <Col xs={24} sm={12} style={{ height: '100%', display: 'flex' }}>
+      </Row>
+      <Row>
+        <Col xs={24} sm={12} style={{ maxHeight: '60vh', overflowY: 'scroll', display: 'flex' }}>
           <TradesTable smallScreen={true} />
         </Col>
       </Row>
