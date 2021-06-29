@@ -93,7 +93,11 @@ export default function Orderbook({
 
   const onRef = useCallback((node) => {
     if (node) {
-      node.scrollTop = (node.scrollHeight - node.clientHeight) / 2;
+      node.scrollTo({
+        top: (node.scrollHeight - node.clientHeight) / 2,
+        left: 0,
+        behavior: 'smooth',
+      });
     }
   });
 
