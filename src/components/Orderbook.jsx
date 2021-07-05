@@ -148,9 +148,7 @@ export default function Orderbook({
             marginRight: '-20px',
             paddingRight: '5px',
             overflowY: 'scroll',
-            maxHeight: smallScreen
-              ? 'calc(100% - 75px)'
-              : 'calc(100vh - 550px)',
+            maxHeight: smallScreen ? 'calc(100% - 75px)' : '390px',
           }}
         >
           {orderbookData?.asks.map(({ price, size, sizePercent }) => (

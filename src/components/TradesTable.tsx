@@ -25,15 +25,15 @@ export default function PublicTrades({ smallScreen }) {
           ? { flex: 1 }
           : {
               marginTop: '10px',
-              minHeight: '270px',
+              minHeight: '334px',
               maxHeight: 'calc(100vh - 700px)',
             }
       }
     >
       <Title>Recent Market trades</Title>
       <SizeTitle>
-        <Col span={8}>Price ({quoteCurrency}) </Col>
-        <Col span={8} style={{ textAlign: 'right' }}>
+        <Col span={8} style={{whiteSpace: 'nowrap'}}>Price ({quoteCurrency}) </Col>
+        <Col span={8} style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
           Size ({baseCurrency})
         </Col>
         <Col span={8} style={{ textAlign: 'right' }}>
@@ -48,7 +48,7 @@ export default function PublicTrades({ smallScreen }) {
             overflowY: 'scroll',
             maxHeight: smallScreen
               ? 'calc(100% - 75px)'
-              : 'calc(100vh - 800px)',
+              : '200px',
           }}
         >
           {trades.map((trade: BonfidaTrade, i: number) => (
@@ -65,14 +65,14 @@ export default function PublicTrades({ smallScreen }) {
                     )
                   : trade.price}
               </Col>
-              <Col span={8} style={{ textAlign: 'right' }}>
+              <Col span={6} style={{ textAlign: 'right' }}>
                 {market?.minOrderSize && !isNaN(trade.size)
                   ? Number(trade.size).toFixed(
                       getDecimalCount(market.minOrderSize),
                     )
                   : trade.size}
               </Col>
-              <Col span={8} style={{ textAlign: 'right', color: '#434a59' }}>
+              <Col span={10} style={{ textAlign: 'right', color: '#434a59', textOverflow: 'ellipsis', overflow: 'hidden'}}>
                 {trade.time && new Date(trade.time).toLocaleTimeString()}
               </Col>
             </Row>
