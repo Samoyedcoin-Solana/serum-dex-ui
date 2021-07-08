@@ -342,11 +342,13 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
         flexWrap: 'nowrap',
       }}
     >
-      <Col flex="auto" style={{ height: '854px', display: 'flex', flexDirection: 'column' }}>
+      <Col flex="auto" style={{ display: 'flex', flexDirection: 'column' }}>
         <FloatingElement style={{ display: 'flex', minHeight: '500px', padding: '1px', overflow: 'hidden' }}>
           <TVChartContainer />
         </FloatingElement>
-        <UserInfoTable />
+        <div>
+          <UserInfoTable />
+        </div>
       </Col>
       <Col flex={'360px'} style={{ height: '854px' }}>
         <Orderbook smallScreen={false} onPrice={onPrice} onSize={onSize} />

@@ -245,13 +245,15 @@ export default function StandaloneBalancesDisplay() {
                 </ActionButton>
               </Col>
             </RowBox>
-            <Tip>
-              All deposits go to your{' '}
-              <Link external to={providerUrl}>
-                {providerName}
-              </Link>{' '}
-              wallet
-            </Tip>
+            {!connected && (
+              <Tip>
+                All deposits go to your{' '}
+                <Link external to={providerUrl}>
+                  {providerName}
+                </Link>{' '}
+                wallet
+              </Tip>
+            )}
           </React.Fragment>
         ),
       )}
